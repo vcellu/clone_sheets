@@ -18,4 +18,4 @@
 5. run `npm run dev`
 
 ## Result 
-There should be two files, masterObjects.json and sheets.json
+There should be two files, masterObjects.json and sheets.json, and a scripts.txt
