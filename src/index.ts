@@ -22,6 +22,8 @@ async function getApp() {
     const global = await globalSession.open();
     //@ts-expect-error
     const app = await global.openDoc(`${config.app.id}`);
+    const script = await app.getScript();
+    saveScript(script)
     return app
 }
 
@@ -64,6 +66,10 @@ function save(objects: unknown, path: string) {
     fs.writeFileSync(path, JSON.stringify(objects, null, 2));
 }
 
+function saveScript(script: string) {
+    fs.writeFileSync("script.txt", script);
+}
+
 async function cloneSheet() {
     try {
         const app = await getApp();
@@ -71,8 +77,6 @@ async function cloneSheet() {
         const masterObjects = await getMasterObjects(app);
         const sheets = await Promise.all(sheetPromises);
 
-        // const props = await getSheet(app);
-        // const masterObjects = await getMasterObjects(app);
         save(sheets, "sheets.json")
         save(masterObjects, "masterObjects.json")
         globalSession.close();
